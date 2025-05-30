@@ -254,7 +254,7 @@ public class AirlineManagement {
             System.out.println("MAIN MENU");
             System.out.println("---------");
             System.out.println("1. Create user");
-            System.out.println("2. Log in");
+            System.out.println("2. Log in (STUB, FOLLOW ME)");
             System.out.println("9. < EXIT");
             String authorisedUser = null;
             switch (readChoice()){
@@ -300,7 +300,19 @@ public class AirlineManagement {
                    case 4: feature4(esql); break;
                    case 5: feature5(esql); break;
                    case 6: feature6(esql); break;
-
+                   case 7: feature7(esql); break;
+                   case 8: feature8(esql); break;
+                   case 9: feature9(esql); break;
+                   case 10: feature10(esql); break;
+                   case 11: feature11(esql); break;
+                   case 12: feature12(esql); break;
+                   case 13: feature13(esql); break;
+                   case 14: feature14(esql); break;
+                   case 15: feature15(esql); break;
+                   case 16: feature16(esql); break;
+                   case 17: feature17(esql); break;
+                   case 18: feature18(esql); break;
+                   case 19: feature19(esql); break;
 
 
 
@@ -365,7 +377,8 @@ public class AirlineManagement {
     * @return User login or null is the user does not exist
     **/
    public static String LogIn(AirlineManagement esql){
-      return null;
+      // return null;
+      return "STUB_ALLOW";
    }//end
 
 // Rest of the functions definition go in here
@@ -376,6 +389,19 @@ public class AirlineManagement {
    public static void feature4(AirlineManagement esql) {}
    public static void feature5(AirlineManagement esql) {}
    public static void feature6(AirlineManagement esql) {}
+   public static void feature7(AirlineManagement esql) {}
+   public static void feature8(AirlineManagement esql) {}
+   public static void feature9(AirlineManagement esql) {}
+   public static void feature10(AirlineManagement esql) {}
+   public static void feature11(AirlineManagement esql) {}
+   public static void feature12(AirlineManagement esql) {}
+   public static void feature13(AirlineManagement esql) {}
+   public static void feature14(AirlineManagement esql) {}
+   public static void feature15(AirlineManagement esql) {}
+   public static void feature16(AirlineManagement esql) {}
+   public static void feature17(AirlineManagement esql) {}
+   public static void feature18(AirlineManagement esql) {}
+   public static void feature19(AirlineManagement esql) {}
   
 
 
