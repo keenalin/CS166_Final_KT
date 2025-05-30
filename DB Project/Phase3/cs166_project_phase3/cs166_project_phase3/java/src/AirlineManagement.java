@@ -300,8 +300,19 @@ public class AirlineManagement {
                    case 4: feature4(esql); break;
                    case 5: feature5(esql); break;
                    case 6: feature6(esql); break;
-
-
+                   case 7: feature7(esql); break;
+                   case 8: feature8(esql); break;
+                   case 9: feature9(esql); break;
+                   case 10: feature10(esql); break;
+                   case 11: feature11(esql); break;
+                   case 12: feature12(esql); break;
+                   case 13: feature13(esql); break;
+                   case 14: feature14(esql); break;
+                   case 15: feature15(esql); break;
+                   case 16: feature16(esql); break;
+                   case 17: feature17(esql); break;
+                   case 18: feature18(esql); break;
+                   case 19: feature19(esql); break;
 
 
                    case 20: usermenu = false; break;
