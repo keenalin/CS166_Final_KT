@@ -706,7 +706,35 @@ try {
    public static void feature15(AirlineManagement esql) {}
    public static void feature16(AirlineManagement esql) {}
    public static void feature17(AirlineManagement esql) {}
-   public static void feature18(AirlineManagement esql) {}
+   
+   // Make maintenance request listing plane ID, repair code requested, and date of request
+   public static void feature18(AirlineManagement esql) {
+      try {
+          // Get Plane ID
+          String planeID = getString("Input Plane ID (e.g., PL001): ");
+
+          // Get repair code
+          String startDate = getDate("Input requested repair code : ");
+
+          // Get ending date range
+          String endDate = getDate("Input ending date (YYYY-MM-DD): ");
+
+          String query = String.format(
+          "SELECT COUNT(FlightNumber) AS DaysFlown, SUM(SeatsSold) AS TotalSeatsSold, SUM(SeatsTotal-SeatsSold) AS TotalSeatsUnsold\n" +
+          "FROM FlightInstance\n" +
+          "WHERE FlightNumber = '%s' AND FlightDate >= '%s' AND FlightDate <= '%s'\n" +
+          "GROUP BY FlightNumber\n", flightID, startDate, endDate
+          );
+         int rowCount = esql.executeQueryAndPrintResult(query);
+         if (rowCount == 0) {
+            System.out.println("No repairs found for specified plane during the specified dates.");
+         }
+      } catch (Exception e) {
+         System.out.println("Error: " + e.getMessage());
+      }
+      
+      pause();
+   }
    public static void feature19(AirlineManagement esql) {}
   
 
