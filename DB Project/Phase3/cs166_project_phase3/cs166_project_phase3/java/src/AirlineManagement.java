@@ -339,7 +339,7 @@ public class AirlineManagement {
                 System.out.println("11. Search Flights by City and Date");
                 System.out.println("12. Search Ticket Cost");
                 System.out.println("13. Get Airplane Type");
-                System.out.println("14. ");
+                System.out.println("14. Make a Reservation");
 
                 //**the following functionalities should ony be able to be used by Pilots**
                 System.out.println("15. View Repairs by Plane");
