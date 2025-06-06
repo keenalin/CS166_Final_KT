@@ -42,6 +42,16 @@ public class AirlineManagement {
    static BufferedReader in = new BufferedReader(
                                 new InputStreamReader(System.in));
 
+   private String type = null;
+   public void setType(String type) {
+      this.type = type;
+   }
+
+   public String getType() {
+      return this.type;
+   }
+
+
    /**
     * Creates a new instance of AirlineManagement
     *
@@ -350,6 +360,9 @@ public class AirlineManagement {
                 System.out.println(".........................");
                 System.out.println(".........................");
 
+               //**the following functionalities should ony be able to be used by Admin (DB Admin)**
+                System.out.println("19. Admin create user code");
+               
                 System.out.println("20. Log out");
                 switch (readChoice()){
                    case 1: feature1(esql); break;
@@ -370,11 +383,11 @@ public class AirlineManagement {
                    case 16: feature16(esql); break;
                    case 17: feature17(esql); break;
                    case 18: feature18(esql); break;
-                   case 19: feature19(esql); break;
+                   case 19: feature19(esql); break;   // Admin only
 
 
 
-                   case 20: usermenu = false; break;
+                   case 20: usermenu = false; esql.setType(null); break;
                    default : System.out.println("Unrecognized choice!"); break;
                 }
               }
@@ -423,21 +436,130 @@ public class AirlineManagement {
       return input;
    }//end readChoice
 
+   public static void CreateCustomer(AirlineManagement esql) {
+      try {
+         String userId = getString("Enter your new User ID: ");
+         String password = getString("Enter your new password: ");
+
+         // Insert into Auth table with type 'Customer'
+         String insertAuth = String.format(
+            "INSERT INTO Auth (Username, Password, Type)\n" +
+            "VALUES ('%s', '%s', 'Customer');",
+            userId, password
+         );
+         esql.executeUpdate(insertAuth);
+         System.out.println("Customer account created successfully.");
+      } catch (Exception e) {
+         System.out.println("Error: " + e.getMessage());
+      }
+   }
+
+   public static void CreateStaff(AirlineManagement esql) {
+      String approvalCode = getString("Enter your approval code: ");
+      String staffType = "null";
+      try {
+         String checkCodeQuery = String.format(
+            "SELECT CodeType FROM NewUserCode WHERE Code = '%s';", approvalCode
+         );
+         List<List<String>> codeResult = esql.executeQueryAndReturnResult(checkCodeQuery);
+
+         if (codeResult.isEmpty()) {
+            System.out.println("Approval code not found.");
+            return;
+         }
+         staffType = codeResult.get(0).get(0);
+      } catch (Exception e) {
+         System.out.println("Error: " + e.getMessage());
+         return;
+      }
+      // System.out.println(staffType);
+      
+      try {
+         String userId = getString("Enter your new User ID: ");
+         String password = getString("Enter your new password: ");
+
+         // Insert into Auth table with type 'Customer'
+         String insertAuth = String.format(
+            "INSERT INTO Auth (Username, Password, Type)\n" +
+            "VALUES ('%s', '%s', '%s');",
+            userId, password, staffType
+         );
+         esql.executeUpdate(insertAuth);
+         System.out.println("Staff account created successfully.");
+      } catch (Exception e) {
+         System.out.println("Error: " + e.getMessage());
+      }
+   }
+
    /*
     * Creates a new user
     **/
    public static void CreateUser(AirlineManagement esql){
+      System.out.println("1. New Customer");         
+      System.out.println("2. New Staff");
+      System.out.println("3. < RETURN");
+      switch (readChoice()){
+         case 1: CreateCustomer(esql); break;
+         case 2: CreateStaff(esql); break;
+         default : System.out.println("Unrecognized choice!"); break;
+      }//end switch
    }//end CreateUser
 
 
    /*
     * Check log in credentials for an existing user
-    * @return User login or null is the user does not exist
+    * @return User login or null if the user does not exist
     **/
-   public static String LogIn(AirlineManagement esql){
-      // return null;
-      return "STUB_ALLOW";
+   public static String LogIn(AirlineManagement esql) {
+      try {
+         String userId = getString("Enter your User ID: ");
+         String password = getString("Enter your password: ");
+
+         String query = String.format(
+            "SELECT Username FROM Auth WHERE Username = '%s' AND Password = '%s';",
+            userId, password
+         );
+         List<List<String>> result = esql.executeQueryAndReturnResult(query);
+
+          if (!result.isEmpty()) {
+            // Find the user's type from Auth table
+            String typeQuery = String.format(
+               "SELECT Type FROM Auth WHERE Username = '%s';",
+               userId
+            );
+            List<List<String>> typeResult = esql.executeQueryAndReturnResult(typeQuery);
+            if (!typeResult.isEmpty()) {
+               String userType = typeResult.get(0).get(0);
+               esql.setType(userType);
+               // System.out.println("Type set to: " + userType);
+               // System.out.println(esql.getType() == userType);
+               // System.out.println(String.valueOf(esql.getType()) == userType);
+               // System.out.println(esql.getType().equals("Admin"));
+               // System.out.println(String.valueOf(esql.getType()).equals("Admin"));
+            } else {
+               esql.setType(null);
+            }
+            System.out.println("Login successful. Welcome, " + userId + "!");
+            return userId;
+         } else {
+            System.out.println("Login failed. Invalid Username or Password.");
+            return null;
+         }
+      } catch (Exception e) {
+         System.out.println("Error: " + e.getMessage());
+         return null;
+      }
    }//end
+
+   public static boolean authOnlyAllow(AirlineManagement esql, String allowedType) {
+      if(String.valueOf(esql.getType()).equals("Admin") || String.valueOf(esql.getType()).equals(allowedType)) {
+         return true;
+      }
+      
+      System.out.println("This feature is not accessible to type " + esql.getType());
+      pause();
+      return false;
+   }
 
 // Rest of the functions definition go in here
 
@@ -887,38 +1009,101 @@ public static void feature11(AirlineManagement esql) { //11. Search Flights by C
       System.out.print("Enter RepairID: ");  // NEW
       String repairID = in.readLine();       // NEW
 
-      System.out.print("Enter PlaneID: ");
-      String planeID = in.readLine();
-
-      System.out.print("Enter Repair Code: ");
-      String repairCode = in.readLine();
-
-      System.out.print("Enter Repair Date (YYYY-MM-DD): ");
-      String repairDate = in.readLine();
-
-      System.out.print("Enter Technician ID: ");
-      String techID = in.readLine();
-
-      String query =
-         "INSERT INTO Repair (RepairID, PlaneID, RepairCode, RepairDate, TechnicianID) " +
-         "VALUES ('" + repairID + "', '" + planeID + "', '" + repairCode + "', '" + repairDate + "', '" + techID + "');";
-
-      esql.executeUpdate(query);
-      System.out.println("Repair entry added successfully.");
-
-   } catch (Exception e) {
-      System.err.println("Error in feature17: " + e.getMessage());
-   }
-
-   pause();
-   }
-
-
+// Make maintenance request listing plane ID, repair code requested, and date of request
    public static void feature18(AirlineManagement esql) {
+      if(!authOnlyAllow(esql, "Pilot")) {
+         return;
+      }
       
+      try {
+          // Get Plane ID
+          String planeID = getString("Input Plane ID (e.g., PL001): ");
+
+          // Get repair code
+          String repairCode = getString("Input requested repair code (e.g., T001): ");
+
+          // Get date
+          String date = getDate("Input requested repair date (YYYY-MM-DD): ");
+
+          String getMaxRequestIdQuery = "SELECT MAX(RequestID) FROM MaintenanceRequest;";
+          List<List<String>> maxIdResult = esql.executeQueryAndReturnResult(getMaxRequestIdQuery);
+          int maxRequestId = 0;
+          if (maxIdResult.size() > 0 && maxIdResult.get(0).get(0) != null) {
+              maxRequestId = Integer.parseInt(maxIdResult.get(0).get(0));
+          }
+          System.out.println("Current largest RequestID: " + maxRequestId);
+
+         // Generate a new unique RequestID using a sequence (assuming you have a sequence named MaintenanceRequest_seq)
+           String query = String.format(
+            "INSERT INTO MaintenanceRequest(RequestID, PlaneID, RepairCode, RequestDate, PilotID)\n" +
+            "VALUES('%s', '%s', '%s', '%s', 'P001');\n", // P001 for PilotID as placeholder
+            (maxRequestId+1), planeID, repairCode, date//, String.valueOf(esql.username)
+           );
+          esql.executeUpdate(query);
+         
+      } catch (Exception e) {
+         System.out.println("Error: " + e.getMessage());
+      }
+      
+      pause();
    }
-  
-   public static void feature19(AirlineManagement esql) {}
+
+   // Admin only.
+   public static void feature19(AirlineManagement esql) {
+      if(!authOnlyAllow(esql, "Admin")) {
+         return;
+      }
+
+      System.out.println("Create new user code for: ");
+      System.out.println("1. Admin");  
+      System.out.println("2. Manager");       
+      System.out.println("3. Technician");
+      System.out.println("4. Pilot");
+      System.out.println("5. < RETURN");
+      String type = "null";
+      switch (readChoice()){
+         case 1: type = "Admin"; break;
+         case 2: type = "Manager"; break;
+         case 3: type = "Technician"; break;
+         case 4: type = "Pilot"; break;
+         case 5: return;
+         default : System.out.println("Unrecognized choice!"); break;
+      }
+
+      // Generate a random 5-digit code
+      String code = "";
+      for (int i = 0; i < 5; i++) {
+         code += (int)(Math.random() * 10);
+      }
+      System.out.println("Generated code: " + code);
+
+      try {
+         String deleteQuery = String.format(
+            "DELETE FROM NewUserCode WHERE CodeType = '%s';",
+            type
+         );
+         esql.executeUpdate(deleteQuery);
+         System.out.println("Deleted any existing code for type: " + type);
+      } catch (Exception e) {
+         System.out.println("Error deleting old code: " + e.getMessage());
+      }
+
+      // Insert the code into NewUserCode table
+      try {
+         String insertCode = String.format(
+         "INSERT INTO NewUserCode (CodeType, Code)\n" +
+         "VALUES ('%s', '%s');",
+         type, code
+         );
+         esql.executeUpdate(insertCode);
+         System.out.println("New user code replaced for type: " + type);
+         System.out.println("Code: " + String.valueOf(code));
+      } catch (Exception e) {
+         System.out.println("Error: " + e.getMessage());
+      }
+
+      pause();
+   }
   
 
 
