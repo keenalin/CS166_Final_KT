@@ -1004,10 +1004,37 @@ public static void feature11(AirlineManagement esql) { //11. Search Flights by C
    pause();
 
    }
+   
    public static void feature17(AirlineManagement esql) {//17. Add a New Repair
       try {
       System.out.print("Enter RepairID: ");  // NEW
       String repairID = in.readLine();       // NEW
+
+      System.out.print("Enter PlaneID: ");
+      String planeID = in.readLine();
+
+      System.out.print("Enter Repair Code: ");
+      String repairCode = in.readLine();
+
+      System.out.print("Enter Repair Date (YYYY-MM-DD): ");
+      String repairDate = in.readLine();
+
+      System.out.print("Enter Technician ID: ");
+      String techID = in.readLine();
+
+      String query =
+         "INSERT INTO Repair (RepairID, PlaneID, RepairCode, RepairDate, TechnicianID) " +
+         "VALUES ('" + repairID + "', '" + planeID + "', '" + repairCode + "', '" + repairDate + "', '" + techID + "');";
+
+      esql.executeUpdate(query);
+      System.out.println("Repair entry added successfully.");
+
+   } catch (Exception e) {
+      System.err.println("Error in feature17: " + e.getMessage());
+   }
+
+   pause();
+   }
 
 // Make maintenance request listing plane ID, repair code requested, and date of request
    public static void feature18(AirlineManagement esql) {
