@@ -377,7 +377,7 @@ public class AirlineManagement {
                 System.out.println("\t19. Admin Create New User Code");
                
                 System.out.println("All Users Features:");
-                System.out.println("\t20 < LOG OUT");
+                System.out.println("\t20. < LOG OUT");
                 switch (readChoice()){
                    case 1: feature1(esql); break;
                    case 2: feature2(esql); break;
@@ -562,10 +562,12 @@ public class AirlineManagement {
             return userId;
          } else {
             System.out.println("Login failed. Invalid Username or Password.");
+            pause();
             return null;
          }
       } catch (Exception e) {
          System.out.println("Error: " + e.getMessage());
+         pause();
          return null;
       }
    }//end
