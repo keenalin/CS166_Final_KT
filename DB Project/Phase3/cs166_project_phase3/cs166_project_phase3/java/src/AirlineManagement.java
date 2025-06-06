@@ -503,6 +503,8 @@ public class AirlineManagement {
          case 2: CreateStaff(esql); break;
          default : System.out.println("Unrecognized choice!"); break;
       }//end switch
+
+      pause();
    }//end CreateUser
 
 
@@ -549,6 +551,8 @@ public class AirlineManagement {
          System.out.println("Error: " + e.getMessage());
          return null;
       }
+
+      pause();
    }//end
 
    public static boolean authOnlyAllow(AirlineManagement esql, String allowedType) {
