@@ -1,4 +1,5 @@
 Username,Password,Type
 Admin,1234,Admin
+Manager,1234,Manager
 T001,1234,Technician
 P001,1234,Pilot
