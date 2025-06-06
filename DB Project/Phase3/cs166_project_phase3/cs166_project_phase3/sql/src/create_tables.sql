@@ -9,6 +9,8 @@ DROP TABLE IF EXISTS Schedule;
 DROP TABLE IF EXISTS Flight;
 DROP TABLE IF EXISTS Plane;
 DROP TABLE IF EXISTS Pilot;
+DROP TABLE IF EXISTS Auth;
+DROP TABLE IF EXISTS NewUserCode;
 
 -- Plane Table
 CREATE TABLE Plane (
@@ -106,4 +108,17 @@ CREATE TABLE MaintenanceRequest (
     PilotID TEXT,
     FOREIGN KEY (PlaneID) REFERENCES Plane(PlaneID),
     FOREIGN KEY (PilotID) REFERENCES Pilot(PilotID)
+);
+
+-- Authentication
+CREATE TABLE Auth (
+    Username TEXT PRIMARY KEY NOT NULL,
+    Password TEXT NOT NULL,
+    Type TEXT NOT NULL  -- Admin, Manager, Customer, Technician, Pilot 
+);
+
+-- NewUserCode (only for staff)
+CREATE TABLE NewUserCode (
+    CodeType TEXT PRIMARY KEY NOT NULL, -- Admin, Manager, Technician, Pilot 
+    Code TEXT NOT NULL
 );
