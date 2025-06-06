@@ -717,7 +717,6 @@ public class AirlineManagement {
           "JOIN Customer C ON R.CustomerID = C.CustomerID\n" +
           "JOIN FlightInstance FI ON R.FlightInstanceID = FI.FlightInstanceID\n" +
           "WHERE FI.FlightNumber = '%s' AND FI.FlightDate = '%s'\n" +
-          "AND (R.Status = 'waitlist' OR R.Status = 'flown')\n" +
           "ORDER BY R.Status;", flightNum, currDate
           );
          int rowCount = esql.executeQueryAndPrintResult(query);
