@@ -712,7 +712,7 @@ public class AirlineManagement {
          String currDate = getDate("Input date of interest (YYYY-MM-DD): ");
 
           String query = String.format(
-          "SELECT C.CustomerID, C.FirstName, C.LastName, R.Status\n" +
+          "SELECT R.ReservationID, C.CustomerID, C.FirstName, C.LastName, R.Status\n" +
           "FROM Reservation R\n" +
           "JOIN Customer C ON R.CustomerID = C.CustomerID\n" +
           "JOIN FlightInstance FI ON R.FlightInstanceID = FI.FlightInstanceID\n" +
