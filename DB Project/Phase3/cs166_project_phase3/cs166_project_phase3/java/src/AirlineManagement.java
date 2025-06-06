@@ -327,7 +327,7 @@ public class AirlineManagement {
             System.out.println("MAIN MENU");
             System.out.println("---------");
             System.out.println("1. Create user");
-            System.out.println("2. Log in (STUB, FOLLOW ME)");
+            System.out.println("2. Log in");
             System.out.println("9. < EXIT");
             String authorisedUser = null;
             switch (readChoice()){
