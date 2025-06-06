@@ -334,36 +334,41 @@ public class AirlineManagement {
                 System.out.println("---------");
 
                 //**the following functionalities should only be able to be used by Management**
-                System.out.println("1. Get a Flight's schedule for the week");
-                System.out.println("2. Check Flight seats");
-                System.out.println("3. Flight status (departure/arrival time)");
-                System.out.println("4. Flights on a specific date");
-                System.out.println("5. Passenger lists by flight");
-                System.out.println("6. Reservation traveler details");
-                System.out.println("7. Plane details");
-                System.out.println("8. Technician repair history");
-                System.out.println("9. Plane repairs in date range");
-                System.out.println("10. Flight stats over date range");
+                System.out.println("Management Functions:");
+                System.out.println("\t1. Get a Flight's schedule for the week");
+                System.out.println("\t2. Check Flight seats");
+                System.out.println("\t3. Flight status (departure/arrival time)");
+                System.out.println("\t4. Flights on a specific date");
+                System.out.println("\t5. Passenger lists by flight");
+                System.out.println("\t6. Reservation traveler details");
+                System.out.println("\t7. Plane details");
+                System.out.println("\t8. Technician repair history");
+                System.out.println("\t9. Plane repairs in date range");
+                System.out.println("\t10. Flight stats over date range");
 
                 //**the following functionalities should only be able to be used by customers**
-                System.out.println("11. Search Flights by City and Date");
-                System.out.println("12. Search Ticket Cost");
-                System.out.println("13. Get Airplane Type");
-                System.out.println("14. Make a Reservation");
+                System.out.println("Customer Features:");
+                System.out.println("\t11. Search Flights by City and Date");
+                System.out.println("\t12. Search Ticket Cost");
+                System.out.println("\t13. Get Airplane Type");
+                System.out.println("\t14. Make a Reservation");
 
-                //**the following functionalities should ony be able to be used by Pilots**
-                System.out.println("15. View Repairs by Plane");
-                System.out.println("16. View Maintenance Requests by Pilot");
-                System.out.println("17. Add a New Repair");
+                //**the following functionalities should ony be able to be used by Technicians**
+                System.out.println("Technician Features:");
+                System.out.println("\t15. View Repairs by Plane");
+                System.out.println("\t16. View Maintenance Requests by Pilot");
+                System.out.println("\t17. Add a New Repair");
 
-               //**the following functionalities should ony be able to be used by Technicians**
-                System.out.println(".........................");
-                System.out.println(".........................");
+               //**the following functionalities should ony be able to be used by Pilots**
+                System.out.println("Pilot Features:");
+                System.out.println("\t18. Submit Maintenance Request");
 
                //**the following functionalities should ony be able to be used by Admin (DB Admin)**
-                System.out.println("19. Admin create user code");
+                System.out.println("DB Admin Specific Features:");
+                System.out.println("\t19. Admin Create New User Code");
                
-                System.out.println("20. Log out");
+                System.out.println("All Users Features:");
+                System.out.println("\t20 < LOG OUT");
                 switch (readChoice()){
                    case 1: feature1(esql); break;
                    case 2: feature2(esql); break;
@@ -542,6 +547,7 @@ public class AirlineManagement {
                esql.setType(null);
             }
             System.out.println("Login successful. Welcome, " + userId + "!");
+            pause();
             return userId;
          } else {
             System.out.println("Login failed. Invalid Username or Password.");
@@ -551,8 +557,6 @@ public class AirlineManagement {
          System.out.println("Error: " + e.getMessage());
          return null;
       }
-
-      pause();
    }//end
 
    public static boolean authOnlyAllow(AirlineManagement esql, String allowedType) {
