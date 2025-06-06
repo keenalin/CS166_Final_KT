@@ -51,6 +51,15 @@ public class AirlineManagement {
       return this.type;
    }
 
+   private String username = null;
+   public void setUsername(String username) {
+      this.username = username;
+   }
+
+   public String getUsername() {
+      return this.username;
+   }
+
 
    /**
     * Creates a new instance of AirlineManagement
@@ -392,7 +401,7 @@ public class AirlineManagement {
 
 
 
-                   case 20: usermenu = false; esql.setType(null); break;
+                   case 20: usermenu = false; esql.setType(null); esql.setUsername(null); break;
                    default : System.out.println("Unrecognized choice!"); break;
                 }
               }
@@ -538,6 +547,7 @@ public class AirlineManagement {
             if (!typeResult.isEmpty()) {
                String userType = typeResult.get(0).get(0);
                esql.setType(userType);
+               esql.setUsername(userId);
                // System.out.println("Type set to: " + userType);
                // System.out.println(esql.getType() == userType);
                // System.out.println(String.valueOf(esql.getType()) == userType);
@@ -545,6 +555,7 @@ public class AirlineManagement {
                // System.out.println(String.valueOf(esql.getType()).equals("Admin"));
             } else {
                esql.setType(null);
+               esql.setUsername(null);
             }
             System.out.println("Login successful. Welcome, " + userId + "!");
             pause();
@@ -1128,22 +1139,26 @@ public static void feature11(AirlineManagement esql) { //11. Search Flights by C
           // Get date
           String date = getDate("Input requested repair date (YYYY-MM-DD): ");
 
-          String getMaxRequestIdQuery = "SELECT MAX(RequestID) FROM MaintenanceRequest;";
-          List<List<String>> maxIdResult = esql.executeQueryAndReturnResult(getMaxRequestIdQuery);
-          int maxRequestId = 0;
+          String getMaxRequestIDQuery = "SELECT MAX(RequestID) FROM MaintenanceRequest;";
+          List<List<String>> maxIdResult = esql.executeQueryAndReturnResult(getMaxRequestIDQuery);
+          int maxRequestID = 0;
           if (maxIdResult.size() > 0 && maxIdResult.get(0).get(0) != null) {
-              maxRequestId = Integer.parseInt(maxIdResult.get(0).get(0));
+              maxRequestID = Integer.parseInt(maxIdResult.get(0).get(0));
           }
-          System.out.println("Current largest RequestID: " + maxRequestId);
+         //  System.out.println("Current largest RequestID: " + maxRequestID);
 
          // Generate a new unique RequestID using a sequence (assuming you have a sequence named MaintenanceRequest_seq)
            String query = String.format(
-            "INSERT INTO MaintenanceRequest(RequestID, PlaneID, RepairCode, RequestDate, PilotID)\n" +
-            "VALUES('%s', '%s', '%s', '%s', 'P001');\n", // P001 for PilotID as placeholder
-            (maxRequestId+1), planeID, repairCode, date//, String.valueOf(esql.username)
+            "INSERT INTO MaintenanceRequest(RequestID,PlaneID,RepairCode,RequestDate,PilotID)\n" +
+            "VALUES('%s', '%s', '%s', '%s', '%s');\n", // P001 for PilotID as placeholder
+            (maxRequestID+1), planeID, repairCode, date, String.valueOf(esql.username)
            );
           esql.executeUpdate(query);
-         
+          System.out.println("Request submitted. Summary:");
+          System.out.println("\tPlane ID: " + planeID);
+          System.out.println("\tRepair Code: " + repairCode);
+          System.out.println("\tDate: " + date);
+          System.out.println("\tPilot ID: " + esql.username);
       } catch (Exception e) {
          System.out.println("Error: " + e.getMessage());
       }
