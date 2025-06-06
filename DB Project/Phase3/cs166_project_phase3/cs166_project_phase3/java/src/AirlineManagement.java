@@ -564,6 +564,10 @@ public class AirlineManagement {
 // Rest of the functions definition go in here
 
    public static void feature1(AirlineManagement esql) { // Get Flight's schedule for the week
+      if(!authOnlyAllow(esql, "Manager")) {
+         return;
+      }
+      
       try {
          // Get Flight #
          String flightNum = getString("Input Flight number (e.g., F100): ");
@@ -589,6 +593,10 @@ public class AirlineManagement {
 
    // Given a flight and a date, get (1) the number of seats still available and (2) number of seats sold
    public static void feature2(AirlineManagement esql) {
+      if(!authOnlyAllow(esql, "Manager")) {
+         return;
+      }
+      
       try {
          // Get Flight #
          String flightNum = getString("Input Flight number (e.g., F100): ");
@@ -615,7 +623,11 @@ public class AirlineManagement {
 
    // Given a flight and date, find whether (1) the flight departed on time, and (2) arrived on time
    public static void feature3(AirlineManagement esql) {
-try {
+      if(!authOnlyAllow(esql, "Manager")) {
+         return;
+      }
+      
+      try {
          // Get Flight #
          String flightNum = getString("Input Flight number (e.g., F100): ");
 
@@ -641,6 +653,10 @@ try {
 
    // Given a date, get all flights scheduled on that day
    public static void feature4(AirlineManagement esql) {
+      if(!authOnlyAllow(esql, "Manager")) {
+         return;
+      }
+      
       try {
          // Get date
          String currDate = getDate("Input date of interest (YYYY-MM-DD): ");
@@ -665,6 +681,10 @@ try {
    // Given a flight and date, get a list of passengers who (1) made reservations, (2) are on the
    // waiting list, (3) actually flew on the flight (for flights already completed)
    public static void feature5(AirlineManagement esql) {
+      if(!authOnlyAllow(esql, "Manager")) {
+         return;
+      }
+      
       try {
          // Get Flight #
          String flightNum = getString("Input Flight number (e.g., F100): ");
@@ -695,6 +715,10 @@ try {
    // Given a reservation number, retrieve information about the travelers under that number
    // • First & Last Name, Gender, Date of birth, Address, Phone number, Zip Code
    public static void feature6(AirlineManagement esql) {
+      if(!authOnlyAllow(esql, "Manager")) {
+         return;
+      }
+      
       try {
           // Get Reservation #
           String resNum = getString("Input Reservation number (e.g., R0001): ");
@@ -718,6 +742,10 @@ try {
 
    // Given a plane number, get its make, model, age, and last repair date
    public static void feature7(AirlineManagement esql) {
+      if(!authOnlyAllow(esql, "Manager")) {
+         return;
+      }
+      
       try {
           // Get Plane ID
           String planeID = getString("Input Plane Number (e.g., PL001): ");
@@ -740,6 +768,10 @@ try {
 
    // Given a maintenance technician ID, list all repairs made by that person
    public static void feature8(AirlineManagement esql) {
+      if(!authOnlyAllow(esql, "Manager")) {
+         return;
+      }
+      
       try {
           // Get Technician ID
           String technicianID = getString("Input Technician ID (e.g., T001): ");
@@ -764,6 +796,10 @@ try {
 
    // Given a plane ID and a date range, list all the dates and the codes for repairs performed
    public static void feature9(AirlineManagement esql) {
+      if(!authOnlyAllow(esql, "Manager")) {
+         return;
+      }
+      
       try {
           // Get Plane ID
           String planeID = getString("Input Plane ID (e.g., PL001): ");
@@ -795,6 +831,10 @@ try {
    // Given a flight and a range of date (start date, end date), show the statistics of the flight:
    // number of days the flight departed and arrived, number of sold and unsold tickets
    public static void feature10(AirlineManagement esql) {
+      if(!authOnlyAllow(esql, "Manager")) {
+         return;
+      }
+      
       try {
           // Get Flight ID
           String flightID = getString("Input Flight ID (e.g., F100): ");
@@ -824,6 +864,10 @@ try {
    }
    
 public static void feature11(AirlineManagement esql) { //11. Search Flights by City and Date
+      if(!authOnlyAllow(esql, "Customer")) {
+         return;
+      }
+      
       try {
       String depCity = getString("Enter Departure City: ");
       String arrCity = getString("Enter Arrival City: ");
@@ -853,6 +897,10 @@ public static void feature11(AirlineManagement esql) { //11. Search Flights by C
    }
 
    public static void feature12(AirlineManagement esql) { //12.Flight Number By ticket cost
+      if(!authOnlyAllow(esql, "Customer")) {
+         return;
+      }
+      
       try {
       String flightNumber = getString("Enter Flight Number (e.g., F100): ");
 
@@ -875,6 +923,10 @@ public static void feature11(AirlineManagement esql) { //11. Search Flights by C
    }
 
    public static void feature13(AirlineManagement esql) {//13. Get Airplane Type
+      if(!authOnlyAllow(esql, "Customer")) {
+         return;
+      }
+      
       try {
       String flightNumber = getString("Enter Flight Number (e.g., F100): ");
 
@@ -897,6 +949,10 @@ public static void feature11(AirlineManagement esql) { //11. Search Flights by C
    }
 
    public static void feature14(AirlineManagement esql) {//14. make a Reservation
+      if(!authOnlyAllow(esql, "Customer")) {
+         return;
+      }
+      
       try {
       System.out.print("Enter your CustomerID: ");
       String customerId = in.readLine();
@@ -953,6 +1009,10 @@ public static void feature11(AirlineManagement esql) { //11. Search Flights by C
    }
 
    public static void feature15(AirlineManagement esql) {//15. View Repairs by Plane in Date Range
+      if(!authOnlyAllow(esql, "Technician")) {
+         return;
+      }
+      
       try {
       System.out.print("Enter PlaneID: ");
       String planeID = in.readLine();
@@ -983,6 +1043,10 @@ public static void feature11(AirlineManagement esql) { //11. Search Flights by C
    pause();
    }
    public static void feature16(AirlineManagement esql) {//16. View Maintenance Requests by Pilot
+      if(!authOnlyAllow(esql, "Technician")) {
+         return;
+      }
+      
       try {
       System.out.print("Enter PilotID: ");
       String pilotID = in.readLine();
@@ -1006,6 +1070,10 @@ public static void feature11(AirlineManagement esql) { //11. Search Flights by C
    }
    
    public static void feature17(AirlineManagement esql) {//17. Add a New Repair
+      if(!authOnlyAllow(esql, "Technician")) {
+         return;
+      }
+      
       try {
       System.out.print("Enter RepairID: ");  // NEW
       String repairID = in.readLine();       // NEW
