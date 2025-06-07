@@ -64,6 +64,8 @@ CREATE TABLE Customer (
     Address TEXT,
     Phone TEXT,
     Zip TEXT
+    -- Username TEXT
+    -- FOREIGN KEY (Username) REFERENCES Auth(Username)
 );
 
 -- Reservation Table

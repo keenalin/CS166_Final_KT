@@ -426,7 +426,19 @@ public class AirlineManagement {
    public static void Greeting(){
       System.out.println(
          "\n\n*******************************************************\n" +
-         "              User Interface      	               \n" +
+         "              Airline Management System      	               \n" +
+         "\t\t⠀⠀⠀⠀⠀⠀⢱⣆⠀⠀⠀⠀⠀⠀\n" +
+         "\t\t⠀⠀⠀⠀⠀⠀⠈⣿⣷⡀⠀⠀⠀⠀\n" +
+         "\t\t⠀⠀⠀⠀⠀⠀⢸⣿⣿⣷⣧⠀⠀⠀\n" +
+         "\t\t⠀⠀⠀⠀⡀⢠⣿⡟⣿⣿⣿⡇⠀⠀\n" +
+         "\t\t⠀⠀⠀⠀⣳⣼⣿⡏⢸⣿⣿⣿⢀⠀\n" +
+         "\t\t⠀⠀⠀⣰⣿⣿⡿⠁⢸⣿⣿⡟⣼⡆\n" +
+         "\t\t⢰⢀⣾⣿⣿⠟⠀⠀⣾⢿⣿⣿⣿⣿\n" +
+         "\t\t⢸⣿⣿⣿⡏⠀⠀⠀⠃⠸⣿⣿⣿⡿\n" +
+         "\t\t⢳⣿⣿⣿⠀⠀⠀⠀⠀⠀⢹⣿⡿⡁\n" +
+         "\t\t⠀⠹⣿⣿⡄⠀⠀⠀⠀⠀⢠⣿⡞⠁\n" +
+         "\t\t⠀⠀⠈⠛⢿⣄⠀⠀⠀⣠⠞⠋⠀⠀\n" +
+         "\t\t⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀⠀⠀⠀⠀\n" +
          "*******************************************************\n");
    }//end Greeting
 
@@ -584,29 +596,7 @@ public class AirlineManagement {
 
 // Rest of the functions definition go in here
 
-   public static void feature1(AirlineManagement esql) { // Get Flight's schedule for the week
-      if(!authOnlyAllow(esql, "Manager")) {
-         return;
-      }
-      
-      try {
-         // Get Flight #
-         String flightNum = getString("Input Flight number (e.g., F100): ");
-
-         // Get today's date
-         String currDate = getDate("Input today's date (YYYY-MM-DD): ");
-
-         String query = String.format(
-            "SELECT * FROM FlightInstance\n" +
-            "WHERE FlightNumber = '%s' AND flightdate >= '%s' AND flightdate < DATE '%s' + INTERVAL '7 days'\n" +
-            "ORDER BY flightdate;\n", flightNum, currDate, currDate
-         );
-         int rowCount = esql.executeQueryAndPrintResult(query);
-         if (rowCount == 0) {
-            System.out.println("No schedule found for this flight in the upcoming week.");
-         }
-      } catch (Exception e) {
-         System.out.println("Error: " + e.getMessage());
+   ZSystem.out.println("Error: " + e.getMessage());
       }
       
       pause();
@@ -633,7 +623,7 @@ public class AirlineManagement {
          );
          int rowCount = esql.executeQueryAndPrintResult(query);
          if (rowCount == 0) {
-            System.out.println("No schedule found for this flight in the upcoming week.");
+            System.out.println("No information found about the flight on the day you specified.");
          }
       } catch (Exception e) {
          System.out.println("Error: " + e.getMessage());
@@ -663,7 +653,7 @@ public class AirlineManagement {
          );
          int rowCount = esql.executeQueryAndPrintResult(query);
          if (rowCount == 0) {
-            System.out.println("No schedule found for this flight in the upcoming week.");
+            System.out.println("No information found about the flight on the day you specified.");
          }
       } catch (Exception e) {
          System.out.println("Error: " + e.getMessage());
@@ -690,7 +680,7 @@ public class AirlineManagement {
          );
          int rowCount = esql.executeQueryAndPrintResult(query);
          if (rowCount == 0) {
-            System.out.println("No schedule found for this flight in the upcoming week.");
+            System.out.println("No information found about flights on the day you specified.");
          }
       } catch (Exception e) {
          System.out.println("Error: " + e.getMessage());
@@ -723,7 +713,7 @@ public class AirlineManagement {
           );
          int rowCount = esql.executeQueryAndPrintResult(query);
          if (rowCount == 0) {
-            System.out.println("No schedule found for this flight in the upcoming week.");
+            System.out.println("No information found about the flight on the day you specified.");
          }
       } catch (Exception e) {
          System.out.println("Error: " + e.getMessage());
@@ -751,7 +741,7 @@ public class AirlineManagement {
           );
          int rowCount = esql.executeQueryAndPrintResult(query);
          if (rowCount == 0) {
-            System.out.println("No schedule found for this flight in the upcoming week.");
+            System.out.println("No Reservation found under the Reservation number you specified.");
          }
       } catch (Exception e) {
          System.out.println("Error: " + e.getMessage());
@@ -773,11 +763,11 @@ public class AirlineManagement {
           String query = String.format(
           "SELECT *\n" +
           "FROM Plane\n" +
-          "WHERE PlaneID = '%s'\n", planeID
+          "WHERE PlaneID = '%s';\n", planeID
           );
          int rowCount = esql.executeQueryAndPrintResult(query);
          if (rowCount == 0) {
-            System.out.println("No schedule found for this flight in the upcoming week.");
+            System.out.println("No information found about the Plane you specified.");
          }
       } catch (Exception e) {
          System.out.println("Error: " + e.getMessage());
@@ -805,7 +795,7 @@ public class AirlineManagement {
           );
          int rowCount = esql.executeQueryAndPrintResult(query);
          if (rowCount == 0) {
-            System.out.println("No schedule found for this flight in the upcoming week.");
+            System.out.println("No information found about the Technician you specified.");
          }
       } catch (Exception e) {
          System.out.println("Error: " + e.getMessage());
@@ -839,7 +829,7 @@ public class AirlineManagement {
           );
          int rowCount = esql.executeQueryAndPrintResult(query);
          if (rowCount == 0) {
-            System.out.println("No repairs found for specified plane during the specified dates.");
+            System.out.println("No information found about the repairs for the Plane on the days you specified.");
          }
       } catch (Exception e) {
          System.out.println("Error: " + e.getMessage());
@@ -874,7 +864,7 @@ public class AirlineManagement {
           );
          int rowCount = esql.executeQueryAndPrintResult(query);
          if (rowCount == 0) {
-            System.out.println("No repairs found for specified plane during the specified dates.");
+            System.out.println("No information found about the flight on the days you specified.");
          }
       } catch (Exception e) {
          System.out.println("Error: " + e.getMessage());
@@ -981,8 +971,15 @@ public static void feature11(AirlineManagement esql) { //11. Search Flights by C
       String flightInstanceId = in.readLine();
 
       // check seat availability
-      String checkSeats = "SELECT SeatsSold, SeatsTotal FROM FlightInstance WHERE FlightInstanceID = '" + flightInstanceId + "';";
+      String checkSeats = String.format(
+         "SELECT SeatsSold, SeatsTotal\n" +
+         "FROM FlightInstance\n" +
+         "WHERE FlightInstanceID = '%s';",
+         flightInstanceId
+      );
       List<List<String>> seatInfo = esql.executeQueryAndReturnResult(checkSeats);
+      System.out.println(seatInfo);
+      pause(); 
 
       if (seatInfo.size() == 0) {
          System.out.println("Invalid FlightInstanceID.");
@@ -1001,14 +998,6 @@ public static void feature11(AirlineManagement esql) { //11. Search Flights by C
       int nextNum = Integer.parseInt(lastId.substring(1)) + 1;
       String newReservationId = "R" + nextNum;
       
-      String checkStatusQuery = "SELECT Status FROM FlightInstance WHERE FlightInstanceID = '" + flightInstanceId + "';";
-      List<List<String>> flightStatusInfo = esql.executeQueryAndReturnResult(checkStatusQuery);
-      String flightStatus = flightStatusInfo.get(0).get(0).toLowerCase();
-
-      if (flightStatus.equals("flown")) {
-         System.out.println("Cannot make a reservation. This flight has already been completed.");
-         return;
-      }
       // insert reservation
       String insertQuery = String.format(
          "INSERT INTO Reservation (ReservationID, CustomerID, FlightInstanceID, Status) " +
