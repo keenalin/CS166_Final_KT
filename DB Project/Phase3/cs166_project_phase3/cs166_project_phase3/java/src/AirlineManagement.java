@@ -596,7 +596,29 @@ public class AirlineManagement {
 
 // Rest of the functions definition go in here
 
-   ZSystem.out.println("Error: " + e.getMessage());
+   public static void feature1(AirlineManagement esql) { // Get Flight's schedule for the week
+      if(!authOnlyAllow(esql, "Manager")) {
+         return;
+      }
+      
+      try {
+         // Get Flight #
+         String flightNum = getString("Input Flight number (e.g., F100): ");
+
+         // Get today's date
+         String currDate = getDate("Input today's date (YYYY-MM-DD): ");
+
+         String query = String.format(
+            "SELECT * FROM FlightInstance\n" +
+            "WHERE FlightNumber = '%s' AND flightdate >= '%s' AND flightdate < DATE '%s' + INTERVAL '7 days'\n" +
+            "ORDER BY flightdate;\n", flightNum, currDate, currDate
+         );
+         int rowCount = esql.executeQueryAndPrintResult(query);
+         if (rowCount == 0) {
+            System.out.println("No schedule found for this flight in the upcoming week.");
+         }
+      } catch (Exception e) {
+         System.out.println("Error: " + e.getMessage());
       }
       
       pause();
